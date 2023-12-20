@@ -1,4 +1,4 @@
-package com.ubertob.fotf.zettai.websrvice
+ package com.ubertob.fotf.zettai.websrvice
 
 import com.ubertob.fotf.zettai.domain.ListName
 import com.ubertob.fotf.zettai.domain.ToDoList
