@@ -36,7 +36,8 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
         server.start()
         return Ready
     }
-
+    override fun tearDown(): HttpActions =
+        also { server.stop() }
     override fun getToDoList(user: User, listName: ListName): ToDoList? {
 
         val response = callZettai(Method.GET, todoListUrl(user, listName))

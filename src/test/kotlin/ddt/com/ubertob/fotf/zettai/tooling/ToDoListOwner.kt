@@ -28,6 +28,7 @@ data class ToDoListOwner(override val name: String) : DdtActor<ZettaiActions>() 
         }
 
     fun `cannot see #listname`(listName: String) = step(listName) {
+        val tmp =  ListName.fromUntrustedOrThrow(listName)
         val list = getToDoList(user, ListName.fromUntrustedOrThrow(listName))
         expectThat(list).isNull()
     }
