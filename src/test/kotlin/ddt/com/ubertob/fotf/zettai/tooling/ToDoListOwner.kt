@@ -27,6 +27,11 @@ data class ToDoListOwner(override val name: String) : DdtActor<ZettaiActions>() 
                     .containsExactlyInAnyOrder(expectedItems)
         }
 
+    fun `cannot see #listname`(listName: String) = step(listName) {
+        val list = getToDoList(user, ListName.fromUntrustedOrThrow(listName))
+        expectThat(list).isNull()
+    }
+
     private val Assertion.Builder<ToDoList>.itemNames
         get() = get { items.map { it.description } }
 }

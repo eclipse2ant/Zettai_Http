@@ -29,4 +29,17 @@ class SeeATodoListDDT : ZettaiDDT(allActions()) {
 
     }
 
+    @DDT
+    fun `Only owners can see their lists`() = ddtScenario {
+
+        setUp {
+            frank.`starts with a list`(shoppingListName, shoppingItems)
+            bob.`starts with a list`(gardenListName, gardenItems)
+        }.thenPlay(
+            frank.`cannot see #listname`(gardenListName),
+            bob.`cannot see #listname`(shoppingListName)
+        )
+
+    }
+
 }
