@@ -35,11 +35,12 @@ dependencies {
     implementation("org.http4k:http4k-core:${http4kVersion}")
     implementation("org.http4k:http4k-server-jetty:${http4kVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    implementation 'org.jsoup:jsoup:1.17.2'
     testImplementation("org.http4k:http4k-testing-approval:${http4kVersion}")
     testImplementation("org.http4k:http4k-testing-hamkrest:${http4kVersion}")
     testImplementation("org.http4k:http4k-testing-strikt:${http4kVersion}")
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation 'com.ubertob.pesticide:pesticide-core:1.6.6'
 }
-
 
