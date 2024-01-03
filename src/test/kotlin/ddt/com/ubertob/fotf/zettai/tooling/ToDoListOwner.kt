@@ -15,6 +15,11 @@ data class ToDoListOwner(override val name: String) : DdtActor<ZettaiActions>() 
 
     val user = User(name)
 
+    fun `can add #item to #listname`(itemName: String, listName: String) =
+        step(itemName, listName) {
+            val item = ToDoItem(itemName)
+            addListItem(user, ListName(listName), item)
+        }
     fun `can see #listname with #itemnames`(
                 listName: String,
                 expectedItems: List<String>) =
