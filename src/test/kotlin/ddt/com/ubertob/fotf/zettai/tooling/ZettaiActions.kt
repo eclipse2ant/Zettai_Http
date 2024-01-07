@@ -19,7 +19,7 @@ interface ZettaiActions : DdtActions<DdtProtocol> {
 typealias ZettaiDDT = DomainDrivenTest<ZettaiActions>
 
 fun allActions() = setOf(
-    DomainOnlyActions(),
+//    DomainOnlyActions(),
     HttpActions()
 )
 

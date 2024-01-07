@@ -11,6 +11,8 @@ import org.http4k.core.Method
 import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
+import org.http4k.core.body.Form
+import org.http4k.core.body.toBody
 import org.http4k.server.Jetty
 import org.http4k.server.asServer
 import org.jsoup.Jsoup
@@ -60,6 +62,22 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
         )
     }
 
+    override fun addListItem(user: User,
+                             listName: ListName, item: ToDoItem) {
+        val response = submitToZettai(
+            todoListUrl(user, listName),
+            listOf( "itemname" to item.description,
+                "itemdue" to item.dueDate?.toString())
+        )
+        expectThat(response.status).isEqualTo(Status.SEE_OTHER)
+    }
+
+    private fun submitToZettai(path: String, webForm: Form): Response =
+        client(log(
+            Request(
+                Method.POST,
+                "http://localhost:$zettaiPort/$path")
+                .body(webForm.toBody())))
     private fun todoListUrl(user: User, listName: ListName) =
         "todo/${user.name}/${listName.name}"
 
