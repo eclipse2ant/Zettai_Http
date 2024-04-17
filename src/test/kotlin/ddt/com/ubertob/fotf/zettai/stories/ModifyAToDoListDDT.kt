@@ -20,6 +20,6 @@ class ModifyAToDoListDDT : ZettaiDDT(allActions()){
             ann.`can add #item to #listname`("change the lock", "diy"),
             ann.`can see #listname with #itemnames`("diy", listOf(
                 "fix the gate", "paint the shelf", "change the lock"))
-        ).wip(LocalDate.of(2024,12,31), "Not implemented yet")
+        )
     }
 }
