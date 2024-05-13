@@ -47,7 +47,6 @@ data class Zettai(val hub : ZettaiHub): HttpHandler {
         return User(user) to ListName(list)
     }
     fun fetchListContent(listId: Pair<User, ListName>): ToDoList? {
-        var tmp =   hub.getList(listId.first, listId.second)
         return hub.getList(listId.first, listId.second)
 //            ?: error("List unknown")
     }
