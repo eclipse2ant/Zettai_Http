@@ -2,7 +2,7 @@
 
 import com.ubertob.fotf.zettai.domain.*
 import com.ubertob.fotf.zettai.ui.HtmlPage
-import com.ubertob.fotf.zettai.ui.renderHtml
+import com.ubertob.fotf.zettai.ui.renderPage
 import org.http4k.core.*
 import org.http4k.core.body.form
 import org.http4k.routing.bind
@@ -22,7 +22,7 @@ data class Zettai(val hub : ZettaiHub): HttpHandler {
     private fun getToDoList(request: Request): Response =
         request.let(::extractListData)
             .let(::fetchListContent)
-            ?.let(::renderHtml)
+            ?.let(::renderPage)
             ?.let(::createResponse)
             ?: Response(Status.NOT_FOUND)
 

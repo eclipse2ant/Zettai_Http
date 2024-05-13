@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter
 
 data class HtmlPage(val raw: String)
 
-fun renderHtml(todoList: ToDoList): HtmlPage =
+fun renderPage(todoList: ToDoList): HtmlPage =
     HtmlPage(
         """
         <!DOCTYPE html>
@@ -52,12 +52,6 @@ private fun renderItem(it: ToDoItem): String = """<tr>
               <td>${it.dueDate?.toIsoString().orEmpty()}</td>
               <td>${it.status}</td>
             </tr>""".trimIndent()
-
-
-private fun renderItems(items: List<ToDoItem>) =
-    items.map {
-        """<tr><td>${it.description}</td></tr>""".trimIndent()
-    }.joinToString("")
 
 fun LocalDate.toIsoString(): String = format(DateTimeFormatter.ISO_LOCAL_DATE)
 
