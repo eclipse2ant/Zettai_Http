@@ -20,6 +20,11 @@ data class ToDoListOwner(override val name: String) : DdtActor<ZettaiActions>() 
             val item = ToDoItem(itemName)
             addListItem(user, ListName(listName), item)
         }
+
+    fun  `cannot see any list`() = step {
+        val lists = allUserLists(user)
+        expectThat(lists).isEmpty()
+    }
     fun `can see #listname with #itemnames`(
                 listName: String,
                 expectedItems: List<String>) =
