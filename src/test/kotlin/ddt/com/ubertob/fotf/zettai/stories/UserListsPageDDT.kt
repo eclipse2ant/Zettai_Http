@@ -16,4 +16,24 @@ class UserListsPageDDT: ZettaiDDT(allActions()) {
         play(emma.`cannot see any list`()
         ).wip(LocalDate.of(2024,12,31))
     }
+
+    @DDT
+    fun `only owners can see all their list`() = ddtScenario {
+        val expectedLists = generateSomeToDoLists()
+        setuo {
+            carol.`starts with some lists`(expectedLists)
+        }.thenPlay(
+            carol.`can see the lists #listNames`(expectedLists.keys),
+            emma.`cannot see any lists`()
+        ).wip(LocalDate.of(2024,12,31) )
+    }
+
+    private fun generateSomeToDoLists(): Map<String, List<String>> {
+        return   mapOf(
+            "work" to listOf("meeting", "spreadsheet"),
+            "home" to listOf("but food"),
+            "frends" to listOf("buy present", "book restaurant")
+        )
+    }
+
 }
