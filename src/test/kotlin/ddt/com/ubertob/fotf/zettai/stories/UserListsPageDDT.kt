@@ -20,11 +20,11 @@ class UserListsPageDDT: ZettaiDDT(allActions()) {
     @DDT
     fun `only owners can see all their list`() = ddtScenario {
         val expectedLists = generateSomeToDoLists()
-        setuo {
+        setUp {
             carol.`starts with some lists`(expectedLists)
         }.thenPlay(
             carol.`can see the lists #listNames`(expectedLists.keys),
-            emma.`cannot see any lists`()
+            emma.`cannot see any list`()
         ).wip(LocalDate.of(2024,12,31) )
     }
 
