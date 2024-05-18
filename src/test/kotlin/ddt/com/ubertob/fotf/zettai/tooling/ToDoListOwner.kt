@@ -49,6 +49,6 @@ data class ToDoListOwner(override val name: String) : DdtActor<ZettaiActions>() 
         expectThat(list).isNull()
     }
 
-    private val Assertion.Builder<ToDoList>.itemNames
+    private val Assertion.Builder<ToDoList>.itemNames: Assertion.Builder<List<String>>
         get() = get { items.map { it.description } }
 }
