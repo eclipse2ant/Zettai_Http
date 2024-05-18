@@ -1,7 +1,6 @@
 package ddt.com.ubertob.fotf.zettai.stories
 
 import com.ubertob.pesticide.core.DDT
-import com.ubertob.pesticide.core.DdtScenario
 import ddt.com.ubertob.fotf.zettai.tooling.ToDoListOwner
 import ddt.com.ubertob.fotf.zettai.tooling.ZettaiDDT
 import ddt.com.ubertob.fotf.zettai.tooling.allActions
