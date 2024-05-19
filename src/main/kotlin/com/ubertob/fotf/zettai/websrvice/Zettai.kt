@@ -10,11 +10,24 @@ import org.http4k.routing.path
 import org.http4k.routing.routes
 
 
-data class Zettai(val hub : ZettaiHub): HttpHandler {
+class Zettai(val hub : ZettaiHub): HttpHandler {
     val routes = routes(
         "/todo/{user}/{list}" bind Method.GET to ::getToDoList,
-        "/todo/{user}/{listname}" bind Method.POST to ::addNewItem
+        "/todo/{user}/{listname}" bind Method.POST to ::addNewItem,
+        "/todo/{user}" bind Method.GET to ::getAllLists
     )
+
+
+    private fun getAllLists(req: Request): Response {
+        val user = req.extractUser()
+
+        return hub.getLists(user)
+            ?.let{ renderListPage(user, it) }
+            ?.let(::toResponce)
+            ?: Response(Status.BAD_REQUEST)
+    }
+
+    fun Request.extractUser(): User = path("user").orEmpty().let(::User)
 
     override fun invoke(request: Request): Response =
         routes(request)
