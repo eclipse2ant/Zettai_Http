@@ -72,6 +72,12 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
         expectThat(response.status).isEqualTo(Status.SEE_OTHER)
     }
 
+    override fun allUserLists(user: User): List<ListName> {
+        val response = callZettai(Method.GET, allUserListsUrl())
+        expectThat(response.status).isEqualTo(Status.OK)
+        TODO("parsing not implemented yet")
+    }
+
     private fun submitToZettai(path: String, webForm: Form): Response =
         client(log(
             Request(
