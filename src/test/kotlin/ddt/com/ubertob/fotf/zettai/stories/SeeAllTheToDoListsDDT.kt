@@ -6,7 +6,7 @@ import ddt.com.ubertob.fotf.zettai.tooling.ZettaiDDT
 import ddt.com.ubertob.fotf.zettai.tooling.allActions
 import java.time.LocalDate
 
-class UserListsPageDDT: ZettaiDDT(allActions()) {
+class SeeAllTheToDoListsDDT: ZettaiDDT(allActions()) {
     val carol by NamedActor(::ToDoListOwner)
     val emma by NamedActor(::ToDoListOwner)
 
