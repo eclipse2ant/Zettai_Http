@@ -2,6 +2,8 @@
 
 import com.ubertob.fotf.zettai.domain.*
 import com.ubertob.fotf.zettai.ui.HtmlPage
+import com.ubertob.fotf.zettai.ui.renderListPage
+import com.ubertob.fotf.zettai.ui.renderListsPage
 import com.ubertob.fotf.zettai.ui.renderPage
 import org.http4k.core.*
 import org.http4k.core.body.form
@@ -22,7 +24,7 @@ class Zettai(val hub : ZettaiHub): HttpHandler {
         val user = req.extractUser()
 
         return hub.getLists(user)
-            ?.let{ renderListPage(user, it) }
+            ?.let{ renderListsPage(user, it) }
             ?.let(::toResponce)
             ?: Response(Status.BAD_REQUEST)
     }

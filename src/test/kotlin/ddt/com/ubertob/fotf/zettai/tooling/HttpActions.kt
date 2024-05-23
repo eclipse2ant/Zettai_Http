@@ -73,7 +73,7 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
     }
 
     override fun allUserLists(user: User): List<ListName> {
-        val response = callZettai(Method.GET, allUserListsUrl())
+        val response = callZettai(Method.GET, allUserListsUrl(user))
         expectThat(response.status).isEqualTo(Status.OK)
         val html = HtmlPage(response.bodyString())
         val names = extractListNamesFromPage(html)
@@ -89,7 +89,8 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
                 .body(webForm.toBody())))
     private fun todoListUrl(user: User, listName: ListName) =
         "todo/${user.name}/${listName.name}"
-
+    private fun allUserListsUrl(user: User) =
+        "todo/${user.name}"
     private fun HtmlPage.parse(): Document = Jsoup.parse(raw)
 
     private fun extractItemsFromPage(html: HtmlPage): List<ToDoItem> =
@@ -106,7 +107,13 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
             .map { (name, date, status) ->
                 ToDoItem(name, date, status)
             }
-
+    private fun extractListNamesFromPage(html: HtmlPage): List<String> {
+        return html.parse()
+            .select("tr")
+            .mapNotNull {
+                it.select("td").firstOrNull()?.text()
+            }
+    }
 
     private fun callZettai(method: Method, path: String): Response =
         client(log(Request(method, "http://localhost:$zettaiPort/$path")))
