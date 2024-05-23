@@ -3,7 +3,7 @@ package com.ubertob.fotf.zettai.domain
 interface ZettaiHub {
     fun getList(user: User, listName: ListName): ToDoList?
     fun addItemToList(user: User, listName: ListName, item: ToDoItem): ToDoList?
-    fun getList(user: User): List<ListName>?
+    fun getLists(user: User): List<ListName>?
 }
 
 
