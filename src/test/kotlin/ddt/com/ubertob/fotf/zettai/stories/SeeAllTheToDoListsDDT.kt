@@ -12,8 +12,7 @@ class SeeAllTheToDoListsDDT: ZettaiDDT(allActions()) {
 
     @DDT
     fun `no users have no lists`() = ddtScenario {
-        play(emma.`cannot see any list`()
-        ).wip(LocalDate.of(2024,12,31))
+        play(emma.`cannot see any list`())
     }
 
     @DDT
@@ -23,8 +22,7 @@ class SeeAllTheToDoListsDDT: ZettaiDDT(allActions()) {
             carol.`starts with some lists`(expectedLists)
         }.thenPlay(
             carol.`can see the lists #listNames`(expectedLists.keys),
-            emma.`cannot see any list`()
-        ).wip(LocalDate.of(2024,12,31) )
+            emma.`cannot see any list`())
     }
 
     private fun generateSomeToDoLists(): Map<String, List<String>> {

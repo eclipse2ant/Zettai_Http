@@ -24,6 +24,9 @@ class DomainOnlyActions : ZettaiActions {
                              listName: ListName, item: ToDoItem) {
         hub.addItemToList(user, listName, item)
     }
+    override fun allUserLists(user: User): List<ListName> =
+        hub.getLists(user) ?: emptyList()
+
     override fun ToDoListOwner.`starts with a list`(listName: String, items: List<String>) {
         val newList = ToDoList.build(listName, items)
         fetcher.assignListToUser(user, newList)

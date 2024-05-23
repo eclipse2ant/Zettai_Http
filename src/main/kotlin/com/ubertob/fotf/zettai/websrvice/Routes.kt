@@ -2,7 +2,6 @@
 
 import com.ubertob.fotf.zettai.domain.*
 import com.ubertob.fotf.zettai.ui.HtmlPage
-import com.ubertob.fotf.zettai.ui.renderListPage
 import com.ubertob.fotf.zettai.ui.renderListsPage
 import com.ubertob.fotf.zettai.ui.renderPage
 import org.http4k.core.*
@@ -12,20 +11,21 @@ import org.http4k.routing.path
 import org.http4k.routing.routes
 
 
-class Zettai(val hub : ZettaiHub): HttpHandler {
+class Routes(val hub : ZettaiHub): HttpHandler {
     val routes = routes(
         "/todo/{user}/{list}" bind Method.GET to ::getToDoList,
         "/todo/{user}/{listname}" bind Method.POST to ::addNewItem,
         "/todo/{user}" bind Method.GET to ::getAllLists
     )
 
-
+    fun toResponse(htmlPage: HtmlPage): Response =
+        Response(Status.OK).body(htmlPage.raw)
     private fun getAllLists(req: Request): Response {
         val user = req.extractUser()
 
         return hub.getLists(user)
             ?.let{ renderListsPage(user, it) }
-            ?.let(::toResponce)
+            ?.let(::toResponse)
             ?: Response(Status.BAD_REQUEST)
     }
 

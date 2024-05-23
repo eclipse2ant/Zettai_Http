@@ -5,7 +5,7 @@ import com.ubertob.fotf.zettai.domain.*
 import com.ubertob.fotf.zettai.ui.HtmlPage
 import com.ubertob.fotf.zettai.ui.toIsoLocalDate
 import com.ubertob.fotf.zettai.ui.toStatus
-import com.ubertob.fotf.zettai.websrvice.Zettai
+import com.ubertob.fotf.zettai.websrvice.Routes
 import org.http4k.client.JettyClient
 import org.http4k.core.Method
 import org.http4k.core.Request
@@ -17,7 +17,6 @@ import org.http4k.server.Jetty
 import org.http4k.server.asServer
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 
@@ -28,7 +27,7 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
     private val hub = ToDoListHub(fetcher)
 
     val zettaiPort = 8000 //different from the one in main
-    val server = Zettai(hub).asServer(Jetty(zettaiPort))
+    val server = Routes(hub).asServer(Jetty(zettaiPort))
 
     override val protocol: DdtProtocol = Http(env)
 

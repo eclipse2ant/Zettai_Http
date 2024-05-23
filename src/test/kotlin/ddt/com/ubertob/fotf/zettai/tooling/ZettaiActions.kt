@@ -20,8 +20,7 @@ interface ZettaiActions : DdtActions<DdtProtocol> {
         lists.forEach{(ListName, items) ->
             `starts with a list`(ListName, items)
         }
-    fun allUserLists(user: User): List<ListName> =
-        hub.getLists(user) ?: emptyList()
+    fun allUserLists(user: User): List<ListName>
 }
 
 typealias ZettaiDDT = DomainDrivenTest<ZettaiActions>
