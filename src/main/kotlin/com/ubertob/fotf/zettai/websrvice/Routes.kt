@@ -15,7 +15,8 @@ class Zettai(val hub : ZettaiHub): HttpHandler {
     val routes = routes(
         "/todo/{user}/{list}" bind Method.GET to ::getToDoList,
         "/todo/{user}/{listname}" bind Method.POST to ::addNewItem,
-        "/todo/{user}" bind Method.GET to ::getAllLists
+        "/todo/{user}" bind Method.GET to ::getAllLists,
+        "/todo/{user}" bind Method.POST to ::createNewList
     )
 
     fun toResponse(htmlPage: HtmlPage): Response =
@@ -40,6 +41,19 @@ class Zettai(val hub : ZettaiHub): HttpHandler {
             ?.let(::renderPage)
             ?.let(::createResponse)
             ?: Response(Status.NOT_FOUND)
+
+    private fun createNewList(request: Request): Response {
+        val user = request.extractUser()
+        val listName = request.extractListNameFromForm("listname")
+        return listName
+            ?.let { hub.createToDoList(user, it) }
+            ?.let { Response(Status.SEE_OTHER)
+                .header("Location", "/todo/${user.name}") }
+            ?: Response(Status.BAD_REQUEST)
+    }
+    private fun Request.extractListNameFromForm(formName: String) =
+        form(formName)
+            ?.let(ListName.Companion::fromUntrusted)
 
     private fun addNewItem(request: Request): Response {
         val user = request.path("user")
