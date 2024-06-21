@@ -11,7 +11,7 @@ import org.http4k.routing.path
 import org.http4k.routing.routes
 
 
-class Routes(val hub : ZettaiHub): HttpHandler {
+class Zettai(val hub : ZettaiHub): HttpHandler {
     val routes = routes(
         "/todo/{user}/{list}" bind Method.GET to ::getToDoList,
         "/todo/{user}/{listname}" bind Method.POST to ::addNewItem,

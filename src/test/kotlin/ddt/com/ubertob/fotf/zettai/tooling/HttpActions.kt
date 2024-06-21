@@ -5,7 +5,7 @@ import com.ubertob.fotf.zettai.domain.*
 import com.ubertob.fotf.zettai.ui.HtmlPage
 import com.ubertob.fotf.zettai.ui.toIsoLocalDate
 import com.ubertob.fotf.zettai.ui.toStatus
-import com.ubertob.fotf.zettai.websrvice.Routes
+import com.ubertob.fotf.zettai.websrvice.Zettai
 import org.http4k.client.JettyClient
 import org.http4k.core.Method
 import org.http4k.core.Request
@@ -27,7 +27,7 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
     private val hub = ToDoListHub(fetcher)
 
     val zettaiPort = 8000 //different from the one in main
-    val server = Routes(hub).asServer(Jetty(zettaiPort))
+    val server = Zettai(hub).asServer(Jetty(zettaiPort))
 
     override val protocol: DdtProtocol = Http(env)
 
