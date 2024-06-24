@@ -1,4 +1,4 @@
-package ddt.com.ubertob.fotf.zettai.commands
+package com.ubertob.fotf.zettai.commands
 
 import com.ubertob.fotf.zettai.domain.ListName
 import com.ubertob.fotf.zettai.domain.ToDoItem
@@ -10,3 +10,4 @@ data class CreateToDoList(val user: User, val name: ListName) : ToDoListCommand(
     val id: ToDoListId = ToDoListId.mint()
 }
 data class AddToDoItem(val user: User, val name: ListName, val item: ToDoItem) : ToDoListCommand()
+
