@@ -3,19 +3,11 @@ package com.ubertob.fotf.zettai.evants
 import com.ubertob.fotf.zettai.domain.ListName
 import com.ubertob.fotf.zettai.domain.ToDoItem
 import com.ubertob.fotf.zettai.domain.User
+import com.ubertob.fotf.zettai.fp.EntityEvent
+import com.ubertob.fotf.zettai.fp.EntityState
+import com.ubertob.fotf.zettai.fp.ToDoListId
 import java.time.Instant
-import java.util.*
 
-typealias ToDoListId = EntityId
-
-data class EntityId(val raw: UUID) {
-    companion object {
-        fun mint() = EntityId(UUID.randomUUID())
-    }
-}
-interface EntityEvent {
-    val id: EntityId
-}
 sealed class ToDoListEvent: EntityEvent
 data class ListCreated(
     override val id: ToDoListId, val owner: User,
@@ -39,3 +31,7 @@ data class ListClosed(
     override val id: ToDoListId,
     val closedOn: Instant
 ): ToDoListEvent()
+
+sealed class ToDoListState : EntityState<ToDoListEvent> {
+    abstract override fun combine(event: ToDoListEvent): ToDoListState
+}
