@@ -35,3 +35,8 @@ data class ListClosed(
 sealed class ToDoListState : EntityState<ToDoListEvent> {
     abstract override fun combine(event: ToDoListEvent): ToDoListState
 }
+object InitialState: ToDoListState() {
+    override fun combine(event: ToDoListEvent) = this // for the moment
+}
+fun Iterable<ToDoListEvent>.fold(): ToDoListState =
+    fold(InitialState as ToDoListState) { acc, e -> acc.combine(e) }

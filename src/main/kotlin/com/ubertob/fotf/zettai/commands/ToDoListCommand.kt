@@ -3,7 +3,7 @@ package com.ubertob.fotf.zettai.commands
 import com.ubertob.fotf.zettai.domain.ListName
 import com.ubertob.fotf.zettai.domain.ToDoItem
 import com.ubertob.fotf.zettai.domain.User
-import com.ubertob.fotf.zettai.evants.ToDoListId
+import com.ubertob.fotf.zettai.fp.ToDoListId
 
 sealed class ToDoListCommand
 
