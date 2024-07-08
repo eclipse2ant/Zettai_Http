@@ -6,7 +6,6 @@ import com.ubertob.fotf.zettai.domain.User
 import com.ubertob.fotf.zettai.fp.EntityEvent
 import com.ubertob.fotf.zettai.fp.EntityState
 import com.ubertob.fotf.zettai.fp.ToDoListId
-import jdk.internal.jshell.debug.InternalDebugControl.release
 import java.time.Instant
 
 sealed class ToDoListEvent: EntityEvent
