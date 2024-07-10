@@ -1,0 +1,33 @@
+package com.ubertob.fotf.zettai.evants
+
+import com.ubertob.fotf.zettai.domain.ListName
+import com.ubertob.fotf.zettai.domain.User
+import com.ubertob.fotf.zettai.evants.fold
+import com.ubertob.fotf.zettai.fp.EntityId
+import com.ubertob.fotf.zettai.fp.ToDoListId
+
+interface ToDoListRetriever {
+    fun retrieveByName(user: User, listName: ListName): ToDoListState?
+}
+
+typealias EventStreamer<E> = (EntityId) -> List<E>?
+typealias EventPersister<E> = (List<E>) -> List<E>
+
+class ToDoListEventStore(private val eventStreamer: ToDoListEventStreamer
+):  ToDoListRetriever, EventPersister<ToDoListEvent> {
+    private fun retrieveById(id: ToDoListId): ToDoListState? =
+        eventStreamer(id)
+            ?.fold()
+    override fun retrieveByName(user: User,
+                                listName: ListName): ToDoListState? =
+        eventStreamer.retrieveIdFromName(user, listName)
+            ?.let(::retrieveById)
+            ?: InitialState
+    fun invoke(events: Iterable<ToDoListEvent>) {
+        eventStreamer.store(events)
+    }
+
+    override fun invoke(p1: List<ToDoListEvent>): List<ToDoListEvent> {
+        TODO("Not yet implemented")
+    }
+}
