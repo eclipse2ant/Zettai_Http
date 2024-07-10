@@ -2,13 +2,15 @@ package com.ubertob.fotf.zettai.commands
 
 import com.ubertob.fotf.zettai.domain.ListName
 import com.ubertob.fotf.zettai.domain.User
-import com.ubertob.fotf.zettai.evants.InitialState
-import com.ubertob.fotf.zettai.evants.ListCreated
-import com.ubertob.fotf.zettai.evants.ToDoListEvent
-import com.ubertob.fotf.zettai.evants.ToDoListState
+import com.ubertob.fotf.zettai.domain.ToDoListRetriever
+import com.ubertob.fotf.zettai.events.InitialState
+import com.ubertob.fotf.zettai.events.ListCreated
+import com.ubertob.fotf.zettai.events.ToDoListEvent
+import com.ubertob.fotf.zettai.events.ToDoListState
 
 
-class ToDoListCommandHandler(val entityRetriever: ToDoListRetriever
+class ToDoListCommandHandler(
+    private val entityRetriever: ToDoListRetriever
 ): (ToDoListCommand) -> List<ToDoListEvent>? {
     override fun invoke(command: ToDoListCommand) : List<ToDoListEvent>? =
         when (command) {
@@ -20,7 +22,7 @@ class ToDoListCommandHandler(val entityRetriever: ToDoListRetriever
             ?.let { listState ->
                 when (listState) {
                     InitialState -> {
-                        ListCreated(id, user, name).toList()
+                        listOf(ListCreated(id, user, name))
                     }
                     else -> null //command fail
                 }

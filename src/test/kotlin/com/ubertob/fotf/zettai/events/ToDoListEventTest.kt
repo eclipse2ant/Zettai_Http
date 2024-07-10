@@ -3,7 +3,6 @@ package com.ubertob.fotf.zettai.events
 import com.ubertob.fotf.zettai.domain.randomItem
 import com.ubertob.fotf.zettai.domain.randomListName
 import com.ubertob.fotf.zettai.domain.randomUser
-import com.ubertob.fotf.zettai.evants.*
 import com.ubertob.fotf.zettai.fp.ToDoListId
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat

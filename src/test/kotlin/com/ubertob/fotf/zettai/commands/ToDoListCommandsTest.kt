@@ -4,8 +4,8 @@ import com.ubertob.fotf.zettai.domain.ListName
 import com.ubertob.fotf.zettai.domain.User
 import com.ubertob.fotf.zettai.domain.randomListName
 import com.ubertob.fotf.zettai.domain.randomUser
-import com.ubertob.fotf.zettai.evants.InitialState
-import com.ubertob.fotf.zettai.evants.ListCreated
+import com.ubertob.fotf.zettai.events.InitialState
+import com.ubertob.fotf.zettai.events.ListCreated
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 

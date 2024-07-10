@@ -1,4 +1,4 @@
-package com.ubertob.fotf.zettai.evants
+package com.ubertob.fotf.zettai.events
 
 import com.ubertob.fotf.zettai.domain.ListName
 import com.ubertob.fotf.zettai.domain.ToDoItem

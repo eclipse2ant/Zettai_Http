@@ -1,14 +1,11 @@
-package com.ubertob.fotf.zettai.evants
+package com.ubertob.fotf.zettai.events
 
 import com.ubertob.fotf.zettai.domain.ListName
+import com.ubertob.fotf.zettai.domain.ToDoListRetriever
 import com.ubertob.fotf.zettai.domain.User
-import com.ubertob.fotf.zettai.evants.fold
 import com.ubertob.fotf.zettai.fp.EntityId
 import com.ubertob.fotf.zettai.fp.ToDoListId
 
-interface ToDoListRetriever {
-    fun retrieveByName(user: User, listName: ListName): ToDoListState?
-}
 
 typealias EventStreamer<E> = (EntityId) -> List<E>?
 typealias EventPersister<E> = (List<E>) -> List<E>
