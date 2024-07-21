@@ -8,6 +8,7 @@ import com.ubertob.fotf.zettai.events.InitialState
 import com.ubertob.fotf.zettai.events.ListCreated
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
+import strikt.assertions.isEqualTo
 
 internal class ToDoListCommandsTest {
     val fakeRetriever: ToDoListRetriever = {
@@ -22,4 +23,6 @@ internal class ToDoListCommandsTest {
             ListCreated(cmd.id, cmd.user, cmd.name)
         )
     }
+
+    val handler = ToDoListCommandHandler(entityRetriever)
 }
