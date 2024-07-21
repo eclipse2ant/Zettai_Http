@@ -4,11 +4,11 @@ import com.ubertob.fotf.zettai.domain.ListName
 import com.ubertob.fotf.zettai.domain.ToDoListRetriever
 import com.ubertob.fotf.zettai.domain.User
 import com.ubertob.fotf.zettai.fp.EntityId
+import com.ubertob.fotf.zettai.fp.EventPersister
 import com.ubertob.fotf.zettai.fp.ToDoListId
 
 
-typealias EventStreamer<E> = (EntityId) -> List<E>?
-typealias EventPersister<E> = (List<E>) -> List<E>
+
 
 class ToDoListEventStore(private val eventStreamer: ToDoListEventStreamer
 ):  ToDoListRetriever, EventPersister<ToDoListEvent> {
@@ -20,11 +20,8 @@ class ToDoListEventStore(private val eventStreamer: ToDoListEventStreamer
         eventStreamer.retrieveIdFromName(user, listName)
             ?.let(::retrieveById)
             ?: InitialState
-    fun invoke(events: Iterable<ToDoListEvent>) {
+    override fun  invoke(events: Iterable<ToDoListEvent>): List<ToDoListEvent> {
         eventStreamer.store(events)
     }
 
-    override fun invoke(p1: List<ToDoListEvent>): List<ToDoListEvent> {
-        TODO("Not yet implemented")
-    }
 }

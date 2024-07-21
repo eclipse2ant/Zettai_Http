@@ -2,6 +2,7 @@ package com.ubertob.fotf.zettai.events
 
 import com.ubertob.fotf.zettai.domain.ListName
 import com.ubertob.fotf.zettai.domain.User
+import com.ubertob.fotf.zettai.fp.EventStreamer
 import com.ubertob.fotf.zettai.fp.ToDoListId
 import java.util.concurrent.atomic.AtomicReference
 
