@@ -20,8 +20,6 @@ class ToDoListEventStore(private val eventStreamer: ToDoListEventStreamer
         eventStreamer.retrieveIdFromName(user, listName)
             ?.let(::retrieveById)
             ?: InitialState
-    override fun  invoke(events: Iterable<ToDoListEvent>): List<ToDoListEvent> {
+    override fun  invoke(events: Iterable<ToDoListEvent>): List<ToDoListEvent> =
         eventStreamer.store(events)
-    }
-
 }
