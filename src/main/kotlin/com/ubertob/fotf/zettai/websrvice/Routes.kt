@@ -1,5 +1,7 @@
  package com.ubertob.fotf.zettai.websrvice
 
+
+import com.ubertob.fotf.zettai.commands.CreateToDoList
 import com.ubertob.fotf.zettai.domain.*
 import com.ubertob.fotf.zettai.ui.HtmlPage
 import com.ubertob.fotf.zettai.ui.renderListsPage
@@ -46,7 +48,7 @@ class Zettai(val hub : ZettaiHub): HttpHandler {
         val user = request.extractUser()
         val listName = request.extractListNameFromForm("listname")
         return listName
-            ?.let { hub.createToDoList(user, it) }
+            ?.let { CreateToDoList(user, it) }
             ?.let { Response(Status.SEE_OTHER)
                 .header("Location", "/todo/${user.name}") }
             ?: Response(Status.BAD_REQUEST)
