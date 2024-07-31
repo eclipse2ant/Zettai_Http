@@ -4,10 +4,7 @@ import com.ubertob.fotf.zettai.domain.ListName
 import com.ubertob.fotf.zettai.domain.User
 import com.ubertob.fotf.zettai.domain.ToDoListRetriever
 import com.ubertob.fotf.zettai.domain.ToDoListUpdatableFetcher
-import com.ubertob.fotf.zettai.events.InitialState
-import com.ubertob.fotf.zettai.events.ListCreated
-import com.ubertob.fotf.zettai.events.ToDoListEvent
-import com.ubertob.fotf.zettai.events.ToDoListState
+import com.ubertob.fotf.zettai.events.*
 
 
 class ToDoListCommandHandler(
@@ -29,5 +26,26 @@ class ToDoListCommandHandler(
                     else -> null //command fail
                 }
             }
+
+    private fun AddToDoItem.execute(): List<ToDoListEvent>? =
+        entityRetriever.retrieveByName(user, name)
+            ?.let { listState ->
+                when (listState) {
+                    is ActiveToDoList -> {
+                        if (listState.items.any { it.description == item.description })
+                            null //cannot have 2 items with same name
+                        else {
+                            readModel.addItemToList(user, listState.name, item)
+                            ItemAdded(listState.id, item).toList()
+                        }
+                    }
+
+                    InitialState,
+                    is OnHoldToDoList,
+                    is ClosedToDoList -> null //command fail
+                }
+            }
+    private fun ToDoListEvent.toList(): List<ToDoListEvent> = listOf(this)
+
 }
 
