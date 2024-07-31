@@ -31,5 +31,3 @@ class ToDoListCommandHandler(
             }
 }
 
-typealias ToDoListRetriever =
-            (user: User, listName: ListName) -> ToDoListState?

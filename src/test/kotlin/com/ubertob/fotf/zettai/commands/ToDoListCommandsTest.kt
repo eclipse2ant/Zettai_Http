@@ -15,7 +15,7 @@ internal class ToDoListCommandsTest {
     fun `CreateToDoList generate the correct event`() {
         val cmd = CreateToDoList(randomUser(), randomListName())
         val entityRetriever: ToDoListRetriever = object : ToDoListRetriever {
-            fun retrieveByName(user: User, listName: ListName) = InitialState
+           override fun retrieveByName(user: User, listName: ListName) = InitialState
         }
         val handler = ToDoListCommandHandler(entityRetriever)
         val res = handler(cmd)?.single()

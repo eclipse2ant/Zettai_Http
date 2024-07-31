@@ -7,11 +7,18 @@ import com.ubertob.fotf.zettai.fp.EventPersister
 
 interface ZettaiHub {
     fun getList(user: User, listName: ListName): ToDoList?
-    fun addItemToList(user: User, listName: ListName, item: ToDoItem): ToDoList?
+//    fun addItemToList(user: User, listName: ListName, item: ToDoItem): ToDoList?
     fun getLists(user: User): List<ListName>?
     fun handle(command: ToDoListCommand): ToDoListCommand?
 }
 
+interface ToDoListFetcher {
+
+    fun get(user: User, listName: ListName): ToDoList?
+
+    fun getAll(user: User): List<ListName>?
+
+}
 
 class ToDoListHub(val fetcher: ToDoListUpdatableFetcher,
                   val commandHandler: ToDoListCommandHandler,
