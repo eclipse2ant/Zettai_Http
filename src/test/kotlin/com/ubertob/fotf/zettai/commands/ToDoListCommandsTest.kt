@@ -1,23 +1,21 @@
 package com.ubertob.fotf.zettai.commands
 
-import com.ubertob.fotf.zettai.domain.ListName
-import com.ubertob.fotf.zettai.domain.User
-import com .ubertob.fotf.zettai.domain.ToDoListRetriever
-import com.ubertob.fotf.zettai.domain.randomListName
-import com.ubertob.fotf.zettai.domain.randomUser
-import com.ubertob.fotf.zettai.events.InitialState
-import com.ubertob.fotf.zettai.events.ListCreated
+import com.ubertob.fotf.zettai.domain.*
+import com.ubertob.fotf.zettai.events.*
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
+import strikt.assertions.isA
 import strikt.assertions.isEqualTo
+import strikt.assertions.isNull
 
 internal class ToDoListCommandsTest {
+
 
     @Test
     fun `CreateToDoList generate the correct event`() {
         val cmd = CreateToDoList(randomUser(), randomListName())
         val entityRetriever: ToDoListRetriever = object : ToDoListRetriever {
-            override fun retrieveByName(user: User, listName: ListName) = InitialState
+            fun retrieveByName(user: User, listName: ListName) = InitialState
         }
         val handler = ToDoListCommandHandler(entityRetriever)
         val res = handler(cmd)?.single()

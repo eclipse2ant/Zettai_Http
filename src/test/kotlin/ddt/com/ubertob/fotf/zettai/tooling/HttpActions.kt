@@ -5,7 +5,7 @@ import com.ubertob.fotf.zettai.domain.*
 import com.ubertob.fotf.zettai.ui.HtmlPage
 import com.ubertob.fotf.zettai.ui.toIsoLocalDate
 import com.ubertob.fotf.zettai.ui.toStatus
-import com.ubertob.fotf.zettai.websrvice.Zettai
+import com.ubertob.fotf.zettai.webserver.Zettai
 import org.http4k.client.JettyClient
 import org.http4k.core.Method
 import org.http4k.core.Request

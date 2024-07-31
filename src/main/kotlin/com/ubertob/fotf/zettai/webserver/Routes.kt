@@ -1,4 +1,4 @@
- package com.ubertob.fotf.zettai.websrvice
+ package com.ubertob.fotf.zettai.webserver
 
 
 import com.ubertob.fotf.zettai.commands.CreateToDoList

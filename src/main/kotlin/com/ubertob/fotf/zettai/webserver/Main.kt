@@ -6,7 +6,6 @@ import com.ubertob.fotf.zettai.domain.ToDoStatus.Done
 import com.ubertob.fotf.zettai.domain.ToDoStatus.InProgress
 import com.ubertob.fotf.zettai.events.ToDoListEventStore
 import com.ubertob.fotf.zettai.events.ToDoListEventStreamerInMemory
-import com.ubertob.fotf.zettai.websrvice.Zettai
 import org.http4k.server.Jetty
 import org.http4k.server.asServer
 import java.time.LocalDate
@@ -17,7 +16,7 @@ fun main() {
     val eventStore = ToDoListEventStore(streamer)
 
     val commandHandler =
-        ToDoListCommandHandler(eventStore)
+        ToDoListCommandHandler(eventStore, fetcher)
 
     val hub = ToDoListHub(fetcher, commandHandler, eventStore)
 
