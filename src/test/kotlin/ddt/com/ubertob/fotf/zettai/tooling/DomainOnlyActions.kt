@@ -14,7 +14,7 @@ class DomainOnlyActions : ZettaiActions {
 
 
 
-    private val hub = ToDoListHub(fetcher)
+    private val hub = prepareToDoListHubForTests(fetcher)
 
 
     override fun getToDoList(user: User, listName: ListName): ToDoList? =
@@ -22,7 +22,7 @@ class DomainOnlyActions : ZettaiActions {
 
     override fun addListItem(user: User,
                              listName: ListName, item: ToDoItem) {
-        hub.addItemToList(user, listName, item)
+        hub.handle(AddToDoItem(user, listName, item))
     }
     override fun allUserLists(user: User): List<ListName> =
         hub.getLists(user) ?: emptyList()

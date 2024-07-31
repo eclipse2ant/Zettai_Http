@@ -30,15 +30,9 @@ class ToDoListHub(val fetcher: ToDoListUpdatableFetcher,
             ?.let( persistEvents )
             ?.let{ command } //returning the command
     override fun getList(user: User, listName: ListName): ToDoList? =
-        fetcher(user, listName)
+        fetcher.get(user, listName)
 
-    override fun addItemToList(user: User,
-                               listName: ListName, item: ToDoItem): ToDoList? =
-        fetcher(user, listName)?.run {
-            val newList = copy(items = items
-                .filterNot { it.description == item.description } + item)
-            fetcher.assignListToUser (user, newList)
-        }
+
     override fun getLists(user: User): List<ListName>? =
         fetcher.getAll(user)
 }
