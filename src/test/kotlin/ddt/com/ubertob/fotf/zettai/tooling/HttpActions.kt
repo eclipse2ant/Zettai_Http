@@ -72,15 +72,6 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
         expectThat(response.status).isEqualTo(Status.SEE_OTHER)
     }
 
-    override fun ToDoListOwner.`starts with a list`(listName: String, items: List<String>) {
-        fetcher.assignListToUser(
-            user,
-            ToDoList(ListName.fromUntrustedOrThrow(listName), items.map { ToDoItem(it) })
-        )
-    }
-
-
-
     override fun allUserLists(user: User): List<ListName> {
         val response = callZettai(Method.GET, allUserListsUrl(user))
         expectThat(response.status).isEqualTo(Status.OK)
@@ -94,22 +85,31 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
             allUserListsUrl(user), newListForm(listName))
         expectThat(response.status).isEqualTo(Status.SEE_OTHER)
     }
+
     private fun newListForm(listName: ListName): Form = listOf("listname" to listName.name)
 
-    private fun submitToZettai(path: String, webForm: Form): Response =
-        client(log(
-            Request(
-                Method.POST,
-                "http://localhost:$zettaiPort/$path")
-                .body(webForm.toBody())))
+    override fun ToDoListOwner.`starts with a list`(listName: String, items: List<String>) {
+        val list = ListName.fromTrusted(listName)
+        val events = hub.handle(
+            CreateToDoList(user, list)
+        )
+        events ?: fail("Failed to create list $listName for $name")
+        val created = items.mapNotNull {
+            hub.handle(
+                AddToDoItem(user, list, ToDoItem(it))
+            )
+        }
+        expectThat(created).hasSize(items.size)
+    }
+
     private fun todoListUrl(user: User, listName: ListName) =
         "todo/${user.name}/${listName.name}"
+
     private fun allUserListsUrl(user: User) =
         "todo/${user.name}"
-    private fun HtmlPage.parse(): Document = Jsoup.parse(raw)
 
-    private fun extractItemsFromPage(html: HtmlPage): List<ToDoItem> =
-        html.parse()
+    private fun extractItemsFromPage(html: HtmlPage): List<ToDoItem> {
+        return html.parse()
             .select("tr")
             .filter { it -> it.select("td").size == 3 }
             .map {
@@ -122,6 +122,8 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
             .map { (name, date, status) ->
                 ToDoItem(name, date, status)
             }
+    }
+
     private fun extractListNamesFromPage(html: HtmlPage): List<String> {
         return html.parse()
             .select("tr")
@@ -130,13 +132,26 @@ data class HttpActions(val env: String = "local") : ZettaiActions {
             }
     }
 
+    private fun submitToZettai(path: String, webForm: Form): Response =
+        client(log(
+            Request(
+                Method.POST,
+
+
+                "http://localhost:$zettaiPort/$path")
+                .body(webForm.toBody())))
+
+
     private fun callZettai(method: Method, path: String): Response =
         client(log(Request(method, "http://localhost:$zettaiPort/$path")))
+
 
     fun <T> log(something: T): T {
         println("--- $something")
         return something
     }
+
+    private fun HtmlPage.parse(): Document = Jsoup.parse(raw)
 
 }
 
